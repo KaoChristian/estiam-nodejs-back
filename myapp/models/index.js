@@ -1,10 +1,11 @@
+const config = require('./../config')
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(__filename);
 const models = {};
 const mongoose = require('mongoose');
 
-if (process.env.DB_HOST !== '') {
+if (config.DB_HOST !== '') {
 
     fs.readdirSync(__dirname)
 
@@ -21,7 +22,7 @@ if (process.env.DB_HOST !== '') {
 
     // mongoose.set('debug', true);
 
-    const mongo_location = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+    const mongo_location = `mongodb://${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`;
 
     mongoose.connect(mongo_location, {
         useNewUrlParser: true,

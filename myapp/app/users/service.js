@@ -1,11 +1,27 @@
 class UsersService {
+
+    constructor({ User }){
+        this.User = User;
+    }
     
-    createUsers(userData) {
+    async createUsers(userData) {
+
+        await this.User.findOne({
+            email: userData.email
+        });
+
+        if (_user) {
+            return {
+                message: 'A user with this email already exists!',
+            };
+        } else {
+            await this.User.creat(userData);
+
         return {
-            message: 'create user works!!!',
+            message: 'User created successfully!',
             user: userData,
         };
+        }
     }
 }
-
 module.exports = UsersService;
