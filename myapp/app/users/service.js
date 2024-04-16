@@ -4,9 +4,9 @@ class UsersService {
         this.User = User;
     }
     
-    async createUsers(userData) {
+    async createUser(userData) {
 
-        await this.User.findOne({
+        const _user =  await this.User.findOne({
             email: userData.email
         });
 
@@ -15,7 +15,7 @@ class UsersService {
                 message: 'A user with this email already exists!',
             };
         } else {
-            await this.User.creat(userData);
+            await this.User.create(userData);
 
         return {
             message: 'User created successfully!',
@@ -23,5 +23,35 @@ class UsersService {
         };
         }
     }
+
+    async updateUser(userId, userData){
+        const _user = await this.User.findByIdAndUpdate(userId, userData, { new: true});
+
+        if (_user) {
+            return {
+                message: 'User updated successfully!',
+                user: _user,
+            };
+        }
+
+        return {
+            message: 'User not found!',
+        };
+    }
+    
+    async deleteUser(userId) {
+        const _user = await this.User.findByIdAndDelete(userId);
+
+        if (_user) {
+            return {
+                message: 'User deleted succesfully!',
+            };
+        }
+
+        return {
+            message: 'User not found!',
+        };
+    }
 }
+
 module.exports = UsersService;
